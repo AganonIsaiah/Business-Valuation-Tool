@@ -1,4 +1,7 @@
+# business_val.py
+
 import numpy as np
+from scipy.stats import norm
 
 class BusinessValuation:
     def __init__(self, cash_flows, discount_rate):
@@ -38,7 +41,6 @@ class BusinessValuation:
 
     def generate_valuation_report(self):
         # Generate a comprehensive valuation report
-        # Include details like assumptions, key metrics, and a summary of the analysis.
         report = f"Valuation Report\n\nAssumptions:\n- Discount Rate: {self.discount_rate}\n- Cash Flows: {self.cash_flows}\n\n"
         report += f"Key Metrics:\n- Present Value: {self.calculate_present_value()}\n\n"
         report += "Summary:\n- The business valuation was conducted using a discounted cash flow analysis, taking into account the provided assumptions."

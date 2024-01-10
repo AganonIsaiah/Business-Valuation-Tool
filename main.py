@@ -1,11 +1,7 @@
 # main.py
 
 from flask import Flask, render_template, request
-
-# Import the BusinessValuation class from business_val.py
 from business_val import BusinessValuation
-
-# Import the generate_chart function from chart_gen.py
 from chart_gen import generate_chart
 
 app = Flask(__name__)
@@ -23,7 +19,7 @@ def index():
 
             # Create an instance of the BusinessValuation class
             business_valuation_instance = BusinessValuation(cash_flows, discount_rate)
-            
+
             # Perform the DCF analysis
             present_value_result = business_valuation_instance.calculate_present_value()
 
