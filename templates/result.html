@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Valuation Result</title>
+</head>
+<body>
+    <h1>Business Valuation Result</h1>
+    <p>The present value is ${{ present_value }}</p>
+
+    <h2>Historical Cash Flows</h2>
+    <img src="data:image/png;base64,{{ chart_encoded }}" alt="Historical Cash Flows">
+
+    <label for="num_simulations">Number of Simulations:</label>
+    <input type="text" name="num_simulations" placeholder="e.g., 100" required>
+
+    <label for="sensitivity_rate_range">Discount Rate Range:</label>
+    <input type="text" name="sensitivity_rate_range" placeholder="e.g., 0.05, 0.10" required>
+
+    <label for="sensitivity_flows_range">Cash Flows Range:</label>
+    <input type="text" name="sensitivity_flows_range" placeholder="e.g., 100, 500" required>
+
+    <button type="submit">Calculate</button>
+</body>
+</html>
