@@ -15,24 +15,7 @@
     <h2>Historical Cash Flows</h2>
     <img src="data:image/png;base64,{{ chart_encoded }}" alt="Historical Cash Flows">
 
-    <h2>Monte Carlo Simulation</h2>
-    <p>Simulated Values: {{ simulated_values }}</p>
-
-    <h2>Sensitivity Analysis</h2>
-    <p>Sensitivity Results: {{ sensitivity_results }}</p>
-
     <h2>Valuation Report</h2>
     <p>{{ valuation_report }}</p>
-
-    <label for="num_simulations">Number of Simulations:</label>
-    <input type="text" name="num_simulations" placeholder="e.g., 100" required>
-
-    <label for="sensitivity_rate_range">Discount Rate Range:</label>
-    <input type="text" name="sensitivity_rate_range" placeholder="e.g., 0.05, 0.10" required>
-
-    <label for="sensitivity_flows_range">Cash Flows Range:</label>
-    <input type="text" name="sensitivity_flows_range" placeholder="e.g., 100, 500" required>
-
-    <button type="submit">Calculate</button>
 </body>
 </html>

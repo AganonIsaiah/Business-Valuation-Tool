@@ -7,7 +7,7 @@ import base64
 
 def generate_chart(cash_flows):
     # Create a DataFrame for plotting
-    df = pd.DataFrame({'Year': range(1, 6), 'Cash Flow': cash_flows})
+    df = pd.DataFrame({'Year': range(1, len(cash_flows) + 1), 'Cash Flow': cash_flows})
     
     # Plot historical cash flows
     plt.figure(figsize=(8, 5))
