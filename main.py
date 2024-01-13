@@ -25,7 +25,7 @@ def index():
             chart_encoded = generate_chart(business_valuation_instance.cash_flows)
 
             # Render the result page with the calculated present value and chart data
-            return render_template('index.html',
+            return render_template('dcf.html',
                                    show_results=True,
                                    num_cash_flows=num_cash_flows,
                                    discount_rate=discount_rate,
@@ -36,10 +36,10 @@ def index():
         except ValueError as e:
             # Handle invalid input error
             print("Error:", e)
-            return render_template('index.html', error_message="Invalid input. Please enter valid numeric values.")
+            return render_template('dcf.html', error_message="Invalid input. Please enter valid numeric values.")
 
     # Render the index.html template for the initial GET request
-    return render_template('index.html', show_results=False)
+    return render_template('dcf.html', show_results=False)
 
 if __name__ == '__main__':
     # Run the Flask app in debug mode

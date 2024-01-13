@@ -50,9 +50,12 @@ class BusinessValuation:
         return sensitivity_results
 
     def generate_valuation_report(self):
-        # Generate a comprehensive valuation report
-        report = f"Valuation Report\n\nAssumptions:\n- Discount Rate: {self.discount_rate}\n- Cash Flows: {self.cash_flows}\n\n"
-        report += f"Key Metrics:\n- Present Value: {self.calculate_present_value()}\n\n"
+        report = f"Valuation Report\n\n"
+        report += f"Assumptions:\n- Discount Rate: {self.discount_rate:.2%}\n- Cash Flows: {', '.join(map(str, self.cash_flows))}\n\n"
+        
+        present_value = self.calculate_present_value()
+        report += f"Key Metrics:\n- Present Value: {present_value:.2f}\n\n"
+        
         report += "Summary:\n- The business valuation was conducted using a discounted cash flow analysis, taking into account the provided assumptions."
 
         return report

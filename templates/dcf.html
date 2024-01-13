@@ -1,4 +1,4 @@
-<!-- index.html -->
+<!-- dcf.html -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -15,7 +15,7 @@
         <h2>Business Valuation DCF Result</h2>
         <p>Number of Cash Flows: {{ num_cash_flows }}</p>
         <p>Discount Rate: {{ discount_rate }}</p>
-        <p>The present value is ${{ present_value }}</p>
+        <p>The present value is ${{ '%.2f'|format(present_value) }}</p>
 
         <h3>Historical Cash Flows</h3>
         <img src="data:image/png;base64,{{ chart_encoded }}" alt="Historical Cash Flows">
