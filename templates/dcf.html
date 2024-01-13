@@ -1,6 +1,4 @@
-<!-- dcf.html -->
-
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -22,6 +20,29 @@
 
         <h3>Valuation Report</h3>
         <p>{{ valuation_report }}</p>
+
+   
+        <form method="POST" action="/analysis">
+            <input type="hidden" name="num_simulations" value="100">
+            <button type="submit" name="monte_carlo">Perform Monte Carlo Simulation</button>
+        </form>
+
+        <form method="POST" action="/analysis">
+            <label for="discount_rate_start">Discount Rate Start:</label>
+            <input type="text" name="discount_rate_start" placeholder="e.g., 0.05" required>
+            <label for="discount_rate_end">Discount Rate End:</label>
+            <input type="text" name="discount_rate_end" placeholder="e.g., 0.15" required>
+
+            <label for="cash_flows_start">Cash Flows Start:</label>
+            <input type="text" name="cash_flows_start" placeholder="e.g., 50" required>
+            <label for="cash_flows_end">Cash Flows End:</label>
+            <input type="text" name="cash_flows_end" placeholder="e.g., 150" required>
+
+            <label for="num_points">Number of Points:</label>
+            <input type="text" name="num_points" placeholder="e.g., 10" required>
+
+            <button type="submit" name="sensitivity_analysis">Perform Sensitivity Analysis</button>
+        </form>
 
     {% else %}
     <form method="POST" action="/" id="valuationForm">

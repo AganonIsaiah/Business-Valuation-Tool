@@ -1,19 +1,31 @@
-# business_val.py
-
 import numpy as np
 from scipy.stats import norm
+import json
 
 class BusinessValuation:
     def __init__(self, cash_flows, discount_rate):
         self.cash_flows = cash_flows
         self.discount_rate = discount_rate
 
+    def to_dict(self):
+        return {
+            'cash_flows': self.cash_flows,
+            'discount_rate': self.discount_rate
+        }
+
+    def to_json(self):
+        return json.dumps(self.to_dict())
+
+    @classmethod
+    def from_json(cls, json_str):
+        data = json.loads(json_str)
+        return cls(data['cash_flows'], data['discount_rate'])
+
     def calculate_present_value(self):
         present_value = 0
 
         for i in range(1, len(self.cash_flows) + 1):
             discounted_cash_flow = self.cash_flows[i - 1] / ((1 + self.discount_rate) ** i)
-            print(f"i: {i}, cash_flow: {self.cash_flows[i - 1]}, discounted_cash_flow: {discounted_cash_flow}")
             present_value += discounted_cash_flow
 
         return present_value

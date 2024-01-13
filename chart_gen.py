@@ -1,5 +1,3 @@
-# chart_gen.py
-
 import pandas as pd
 import matplotlib.pyplot as plt
 from io import BytesIO

@@ -1,0 +1,39 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Valuation Analysis</title>
+</head>
+<body>
+    <h1>Business Valuation Analysis</h1>
+
+    {% if monte_carlo_results %}
+        <h2>Monte Carlo Simulation Results</h2>
+        <ul>
+            {% for value in monte_carlo_results %}
+                <li>{{ value|round(2) }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    {% if sensitivity_results %}
+        <h2>Sensitivity Analysis Results</h2>
+        <table border="1">
+            <tr>
+                <th>Discount Rate</th>
+                <th>Cash Flows</th>
+                <th>Present Value</th>
+            </tr>
+            {% for result in sensitivity_results %}
+                <tr>
+                    <td>{{ result['Discount Rate'] }}</td>
+                    <td>{{ result['Cash Flows'] }}</td>
+                    <td>{{ result['Present Value'] }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+</body>
+</html>
