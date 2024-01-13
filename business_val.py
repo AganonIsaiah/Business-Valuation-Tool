@@ -1,6 +1,7 @@
 # business_val.py
 
 import numpy as np
+from scipy.stats import norm
 
 class BusinessValuation:
     def __init__(self, cash_flows, discount_rate):
@@ -8,10 +9,45 @@ class BusinessValuation:
         self.discount_rate = discount_rate
 
     def calculate_present_value(self):
-        # Calculate the discounted cash flows and present value
-        discounted_cash_flows = [cf / (1 + self.discount_rate)**i for i, cf in enumerate(self.cash_flows)]
-        present_value = sum(discounted_cash_flows)
+        present_value = 0
+
+        for i in range(1, len(self.cash_flows) + 1):
+            discounted_cash_flow = self.cash_flows[i - 1] / ((1 + self.discount_rate) ** i)
+            print(f"i: {i}, cash_flow: {self.cash_flows[i - 1]}, discounted_cash_flow: {discounted_cash_flow}")
+            present_value += discounted_cash_flow
+
         return present_value
+
+    def monte_carlo_simulation(self, num_simulations, custom_cash_flows=None):
+        if custom_cash_flows is None:
+            custom_cash_flows = self.cash_flows
+
+        # Perform Monte Carlo simulation to model uncertainty
+        simulations = np.random.normal(loc=1, scale=0.1, size=(num_simulations, len(custom_cash_flows)))
+        simulated_cash_flows = [custom_cash_flows * simulation for simulation in simulations.T]
+        simulated_present_values = [sum(cf / (1 + self.discount_rate)**i for i, cf in enumerate(simulated_cf)) for simulated_cf in simulated_cash_flows]
+        return simulated_present_values
+
+    def sensitivity_analysis(self, discount_rate_range, cash_flows_range, num_points=10, custom_cash_flows=None):
+        if custom_cash_flows is None:
+            custom_cash_flows = self.cash_flows
+
+        # Perform sensitivity analysis and return results
+        discount_rate_values = np.linspace(*discount_rate_range, num=num_points)
+        cash_flows_values = np.linspace(*cash_flows_range, num=num_points)
+
+        sensitivity_results = []
+
+        for rate in discount_rate_values:
+            for flows in cash_flows_values:
+                present_value = self.calculate_present_value()
+                sensitivity_results.append({
+                    'Discount Rate': rate,
+                    'Cash Flows': flows,
+                    'Present Value': present_value
+                })
+
+        return sensitivity_results
 
     def generate_valuation_report(self):
         # Generate a comprehensive valuation report

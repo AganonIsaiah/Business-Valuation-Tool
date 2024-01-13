@@ -10,48 +10,82 @@
 </head>
 <body>
     <h1>Business Valuation Tool</h1>
+
+    {% if show_results %}
+        <h2>Business Valuation DCF Result</h2>
+        <p>Number of Cash Flows: {{ num_cash_flows }}</p>
+        <p>Discount Rate: {{ discount_rate }}</p>
+        <p>The present value is ${{ present_value }}</p>
+
+        <h3>Historical Cash Flows</h3>
+        <img src="data:image/png;base64,{{ chart_encoded }}" alt="Historical Cash Flows">
+
+        <h3>Valuation Report</h3>
+        <p>{{ valuation_report }}</p>
+
+    {% else %}
     <form method="POST" action="/" id="valuationForm">
         <label for="num_cash_flows">Number of Cash Flows:</label>
-        <input type="number" name="num_cash_flows" id="num_cash_flows" min="1" value=" " required>
+        <input type="number" name="num_cash_flows" id="num_cash_flows" min="1" value="1" required>
         <br>
-
-        <div id="cashFlowFields"></div>
-
+    
+        <!-- Input field for discount rate -->
         <label for="discount_rate">Discount Rate (in decimal form):</label>
         <input type="text" name="discount_rate" placeholder="e.g., 10% ==> 0.10" required>
         <br>
-
+    
+        <!-- Input fields for cash flows -->
+        <div id="cashFlowFields"></div>
+    
         <button type="submit">Calculate</button>
     </form>
+    
 
-    {% if error_message %}
-        <p style="color: red;">{{ error_message }}</p>
-    {% endif %}
+        {% if error_message %}
+            <p style="color: red;">{{ error_message }}</p>
+        {% endif %}
 
-    <script>
-        document.getElementById("num_cash_flows").addEventListener("input", function() {
-            var numCashFlows = this.value;
+        <script>
+            // Initialize the cash flow fields with one input field
             var cashFlowFieldsContainer = document.getElementById("cashFlowFields");
+            var label = document.createElement("label");
+            label.setAttribute("for", "cash_flow_1");
+            label.className = "cash-flow-label";
+            label.innerText = "Year 1 Cash Flow:";
 
-            cashFlowFieldsContainer.innerHTML = "";  // Clear previous fields
+            var input = document.createElement("input");
+            input.setAttribute("type", "text");
+            input.setAttribute("name", "cash_flow_1");
+            input.id = "cash_flow_1";
+            input.className = "cash-flow-input";
 
-            for (var i = 1; i <= numCashFlows; i++) {
-                var label = document.createElement("label");
-                label.setAttribute("for", "cash_flow_" + i);
-                label.className = "cash-flow-label";
-                label.innerText = "Year " + i + " Cash Flow:";
+            cashFlowFieldsContainer.appendChild(label);
+            cashFlowFieldsContainer.appendChild(input);
+            cashFlowFieldsContainer.appendChild(document.createElement("br"));
 
-                var input = document.createElement("input");
-                input.setAttribute("type", "text");
-                input.setAttribute("name", "cash_flow_" + i);
-                input.id = "cash_flow_" + i;
-                input.className = "cash-flow-input";
+            // Event listener for dynamically updating the number of cash flow fields
+            document.getElementById("num_cash_flows").addEventListener("input", function() {
+                var numCashFlows = this.value;
+                cashFlowFieldsContainer.innerHTML = "";  // Clear previous fields
 
-                cashFlowFieldsContainer.appendChild(label);
-                cashFlowFieldsContainer.appendChild(input);
-                cashFlowFieldsContainer.appendChild(document.createElement("br"));
-            }
-        });
-    </script>
+                for (var i = 1; i <= numCashFlows; i++) {
+                    var label = document.createElement("label");
+                    label.setAttribute("for", "cash_flow_" + i);
+                    label.className = "cash-flow-label";
+                    label.innerText = "Year " + i + " Cash Flow:";
+
+                    var input = document.createElement("input");
+                    input.setAttribute("type", "text");
+                    input.setAttribute("name", "cash_flow_" + i);
+                    input.id = "cash_flow_" + i;
+                    input.className = "cash-flow-input";
+
+                    cashFlowFieldsContainer.appendChild(label);
+                    cashFlowFieldsContainer.appendChild(input);
+                    cashFlowFieldsContainer.appendChild(document.createElement("br"));
+                }
+            });
+        </script>
+    {% endif %}
 </body>
 </html>
