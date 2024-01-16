@@ -93,7 +93,7 @@ def scenario_analysis():
             cash_flows_key = f'cash_flows_{i}'
 
             discount_rate = float(request.form[discount_rate_key])
-            
+
             # Split the cash flows string into individual values and convert to float
             cash_flows_str = request.form[cash_flows_key]
             cash_flows = [float(value.strip()) for value in cash_flows_str.split(',')]
