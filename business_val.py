@@ -60,6 +60,31 @@ class BusinessValuation:
                 })
 
         return sensitivity_results
+    
+
+    def scenario_analysis(self, scenarios):
+        scenario_results = []
+
+        for scenario in scenarios:
+            discount_rate = scenario['discount_rate']
+            cash_flows = scenario['cash_flows']
+
+            # Create an instance of the BusinessValuation class for the current scenario
+            scenario_instance = BusinessValuation(cash_flows, discount_rate)
+
+            # Calculate present value for the current scenario
+            present_value = scenario_instance.calculate_present_value()
+
+            # Store scenario results
+            scenario_result = {
+                'Discount Rate': discount_rate,
+                'Cash Flows': cash_flows,
+                'Present Value': present_value
+            }
+
+            scenario_results.append(scenario_result)
+
+        return scenario_results
 
     def generate_valuation_report(self):
         report = f"Valuation Report\n\n"

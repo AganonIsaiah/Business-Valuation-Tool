@@ -75,6 +75,39 @@ def analysis():
     # Render the analysis.html template for the initial GET request
     return render_template('analysis.html', monte_carlo_results=None, sensitivity_results=None)
 
+@app.route('/scenario_analysis', methods=['GET', 'POST'])
+def scenario_analysis():
+    if 'business_valuation_instance' not in session:
+        # Redirect to the index page if the necessary data is not available
+        return redirect(url_for('dcf'))
+
+    business_valuation_instance_data = session['business_valuation_instance']
+    business_valuation_instance = BusinessValuation.from_json(business_valuation_instance_data)
+
+    # Check if the form is submitted for Scenario Analysis
+    if request.method == 'POST' and 'scenario_analysis' in request.form:
+        # Parse scenario parameters from the form
+        scenarios = []
+        for i in range(1, int(request.form['num_scenarios']) + 1):
+            discount_rate_key = f'discount_rate_{i}'
+            cash_flows_key = f'cash_flows_{i}'
+
+            discount_rate = float(request.form[discount_rate_key])
+            cash_flows = [float(value) for value in request.form.getlist(cash_flows_key)]
+
+            scenarios.append({
+                'discount_rate': discount_rate,
+                'cash_flows': cash_flows
+            })
+
+        # Perform scenario analysis
+        scenario_results = business_valuation_instance.scenario_analysis(scenarios)
+
+        return render_template('scenario_analysis.html', scenario_results=scenario_results)
+
+    # Render the scenario_analysis.html template for the initial GET request
+    return render_template('scenario_analysis.html', scenario_results=None)
+
 if __name__ == '__main__':
     # Run the Flask app in debug mode
     app.run(debug=True)
