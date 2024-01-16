@@ -25,6 +25,7 @@ Email: IsaiahAganon@cmail.carleton.ca
 - Jinja2
 
 ### Installation
+
 1. Clone the repository: git clone https://github.com/AganonIsaiah/Business-Valuation-Tool.git
 2. Install dependencies: pip install -r requirements.txt
 3. Run app: python main.py
