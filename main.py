@@ -93,7 +93,10 @@ def scenario_analysis():
             cash_flows_key = f'cash_flows_{i}'
 
             discount_rate = float(request.form[discount_rate_key])
-            cash_flows = [float(value) for value in request.form.getlist(cash_flows_key)]
+            
+            # Split the cash flows string into individual values and convert to float
+            cash_flows_str = request.form[cash_flows_key]
+            cash_flows = [float(value.strip()) for value in cash_flows_str.split(',')]
 
             scenarios.append({
                 'discount_rate': discount_rate,
@@ -103,10 +106,15 @@ def scenario_analysis():
         # Perform scenario analysis
         scenario_results = business_valuation_instance.scenario_analysis(scenarios)
 
-        return render_template('scenario_analysis.html', scenario_results=scenario_results)
+        # Add an index to each result to use in the template
+        scenario_results_with_index = list(enumerate(scenario_results))
+
+        return render_template('scenario_analysis.html', scenario_results=scenario_results_with_index)
 
     # Render the scenario_analysis.html template for the initial GET request
     return render_template('scenario_analysis.html', scenario_results=None)
+
+
 
 if __name__ == '__main__':
     # Run the Flask app in debug mode

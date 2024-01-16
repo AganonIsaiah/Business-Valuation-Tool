@@ -36,8 +36,17 @@ class BusinessValuation:
 
         # Perform Monte Carlo simulation to model uncertainty
         simulations = np.random.normal(loc=1, scale=0.1, size=(num_simulations, len(custom_cash_flows)))
-        simulated_cash_flows = [custom_cash_flows * simulation for simulation in simulations.T]
-        simulated_present_values = [sum(cf / (1 + self.discount_rate)**i for i, cf in enumerate(simulated_cf)) for simulated_cf in simulated_cash_flows]
+
+        # Ensure that custom_cash_flows is a NumPy array
+        custom_cash_flows = np.array(custom_cash_flows)
+
+        # Broadcasting element-wise multiplication
+        simulated_cash_flows = simulations * custom_cash_flows
+
+        simulated_present_values = [
+            sum(cf / (1 + self.discount_rate) ** i for i, cf in enumerate(simulated_cf))
+            for simulated_cf in simulated_cash_flows.T
+        ]
         return simulated_present_values
 
     def sensitivity_analysis(self, discount_rate_range, cash_flows_range, num_points=10, custom_cash_flows=None):

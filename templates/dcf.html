@@ -44,6 +44,20 @@
             <button type="submit" name="sensitivity_analysis">Perform Sensitivity Analysis</button>
         </form>
 
+        <form method="POST" action="/scenario_analysis">
+            <input type="hidden" name="num_scenarios" value="3">
+        
+            {% for i in range(1, 4) %}
+                <label for="discount_rate_{{ i }}">Discount Rate (Scenario {{ i }}):</label>
+                <input type="text" name="discount_rate_{{ i }}" placeholder="e.g., 0.1" required>
+        
+                <label for="cash_flows_{{ i }}">Cash Flows (Scenario {{ i }}):</label>
+                <input type="text" name="cash_flows_{{ i }}" placeholder="e.g., 50, 60, 70" required>
+            {% endfor %}
+        
+            <button type="submit" name="scenario_analysis">Perform Scenario Analysis</button>
+        </form>
+
     {% else %}
     <form method="POST" action="/" id="valuationForm">
         <label for="num_cash_flows">Number of Cash Flows:</label>
